@@ -1,182 +1,229 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nosso Amor ❤️</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(180deg, #0b0c2a, #1a1b4b);
-    color: white;
-    text-align: center;
-    overflow-x: hidden;
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#ff4d6d,#ff8fa3);
+    color:white;
+    overflow-x:hidden;
+    text-align:center;
 }
 
-/* ⭐ ESTRELAS */
-.stars {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    z-index: -1;
+/* containers */
+.container{
+    padding:30px;
 }
 
-.star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: white;
-    animation: twinkle 2s infinite alternate;
+/* botão */
+button{
+    background:white;
+    color:#ff4d6d;
+    border:none;
+    padding:15px 30px;
+    font-size:18px;
+    border-radius:50px;
+    cursor:pointer;
 }
 
-@keyframes twinkle {
-    from { opacity: 0.2; }
-    to { opacity: 1; transform: scale(1.5); }
+/* contador */
+#contador{
+    font-size:28px;
+    margin-top:20px;
 }
 
-/* CONTEÚDO */
-.container {
-    padding: 30px;
+/* fotos */
+.fotos img{
+    width:220px;
+    border-radius:20px;
+    margin:10px;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
 }
 
-h1 {
-    font-size: 2em;
+/* corações */
+.heart{
+    position:fixed;
+    bottom:-10px;
+    color:#fff;
+    animation:subir 6s linear infinite;
+}
+@keyframes subir{
+    from{transform:translateY(0);opacity:1;}
+    to{transform:translateY(-100vh);opacity:0;}
 }
 
-.counter {
-    font-size: 1.5em;
-    margin: 20px 0;
+/* estrelas */
+.star{
+    position:fixed;
+    width:3px;
+    height:3px;
+    background:white;
+    animation:piscar 2s infinite;
+}
+@keyframes piscar{
+    0%,100%{opacity:0.2;}
+    50%{opacity:1;}
 }
 
-/* BOTÕES */
-button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 20px;
-    background: #ff4d6d;
-    color: white;
-    font-size: 1em;
-    cursor: pointer;
-    margin: 10px;
-    transition: 0.3s;
+/* carta */
+#carta{
+    display:none;
+    max-width:600px;
+    margin:auto;
+    font-size:20px;
+    line-height:1.6;
+    background:rgba(255,255,255,0.1);
+    padding:25px;
+    border-radius:20px;
 }
 
-button:hover {
-    background: #ff1e4d;
-    transform: scale(1.05);
+.cursor{
+    display:inline-block;
+    width:3px;
+    background:white;
+    margin-left:5px;
+    animation:blink 1s infinite;
 }
-
-/* GALERIA */
-img {
-    width: 250px;
-    border-radius: 20px;
-    margin: 10px;
-    box-shadow: 0px 0px 20px rgba(255,255,255,0.3);
-}
-
-/* CARTA SECRETA */
-.carta {
-    max-width: 500px;
-    margin: auto;
-    background: rgba(255,255,255,0.1);
-    padding: 20px;
-    border-radius: 20px;
-    display: none;
-    animation: aparecer 1s ease;
-}
-
-@keyframes aparecer {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes blink{
+    50%{opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="stars" id="stars"></div>
-
-<div class="container">
-    <h1>❤️ Desde que começamos...</h1>
-
-    <div class="counter" id="contador"></div>
-
-    <button onclick="toggleMusica()">🎵 Ligar / Desligar Música</button>
-    <button onclick="abrirCarta()">💌 Abrir Carta Secreta</button>
-
-    <br><br>
-
-    <img src="foto1.jpg">
-    <img src="foto2.jpg">
-
-    <div class="carta" id="carta">
-        <h2>Para você ❤️</h2>
-        <p>
-        Desde o dia 20 de Outubro de 2025 minha vida ficou mais bonita.
-        Cada dia ao seu lado é especial, cada risada, cada conversa,
-        cada momento simples virou algo inesquecível.
-
-        Esse site é só uma pequena forma de mostrar o quanto você é
-        importante pra mim.
-
-        Eu te amo ❤️
-        </p>
-    </div>
+<!-- tela inicial -->
+<div id="inicio" class="container">
+<h1>💘 Tenho algo pra você 💘</h1>
+<button onclick="entrar()">Clique aqui amor</button>
 </div>
 
+<!-- conteúdo -->
+<div id="conteudo" style="display:none;" class="container">
+
+<h2>Estamos juntos há:</h2>
+<div id="contador"></div>
+
+<br>
+<button onclick="toggleMusica()">🎵 Ligar / Pausar Música</button>
+<button onclick="abrirCarta()">💌 Abrir Carta</button>
+
+<div class="fotos">
+<!-- TROQUE pelas suas fotos -->
+<img src="foto1.jpg">
+<img src="foto2.jpg">
+<img src="foto3.jpg">
+</div>
+
+<div id="carta">
+<span id="textoCarta"></span><span class="cursor"></span>
+</div>
+
+</div>
+
+<!-- música -->
 <audio id="musica" loop>
-    <source src="musica.mp3" type="audio/mpeg">
+<source src="musica.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-/* ⭐ GERAR ESTRELAS */
-const starsContainer = document.getElementById("stars");
-for (let i = 0; i < 120; i++) {
-    let star = document.createElement("div");
-    star.className = "star";
-    star.style.top = Math.random() * 100 + "%";
-    star.style.left = Math.random() * 100 + "%";
-    star.style.animationDuration = (Math.random() * 2 + 1) + "s";
-    starsContainer.appendChild(star);
+/* entrar no site */
+function entrar(){
+document.getElementById("inicio").style.display="none";
+document.getElementById("conteudo").style.display="block";
 }
 
-/* 📅 CONTADOR DESDE 20/10/2025 */
-const dataInicio = new Date("2025-10-20");
+/* contador correto */
+const dataInicio=new Date(2025,9,20); // 20 OUTUBRO 2025
 
-function atualizarContador() {
-    const hoje = new Date();
-    const diff = hoje - dataInicio;
+function atualizar(){
+const agora=new Date();
 
-    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const meses = Math.floor(dias / 30);
-    const diasRestantes = dias % 30;
+let anos=agora.getFullYear()-dataInicio.getFullYear();
+let meses=agora.getMonth()-dataInicio.getMonth();
+let dias=agora.getDate()-dataInicio.getDate();
 
-    document.getElementById("contador").innerHTML =
-        meses + " meses e " + diasRestantes + " dias juntos 💞";
+if(dias<0){
+meses--;
+const ultimoMes=new Date(agora.getFullYear(),agora.getMonth(),0);
+dias+=ultimoMes.getDate();
 }
 
-atualizarContador();
-
-/* 🎵 CONTROLE DA MUSICA */
-const musica = document.getElementById("musica");
-let tocando = false;
-
-function toggleMusica() {
-    if (tocando) {
-        musica.pause();
-    } else {
-        musica.play();
-    }
-    tocando = !tocando;
+if(meses<0){
+anos--;
+meses+=12;
 }
 
-/* 💌 CARTA SECRETA */
-function abrirCarta() {
-    const carta = document.getElementById("carta");
-    carta.style.display = "block";
+document.getElementById("contador").innerHTML=
+`${meses+anos*12} meses e ${dias} dias ❤️`;
+}
+
+setInterval(atualizar,1000);
+atualizar();
+
+/* música */
+const musica=document.getElementById("musica");
+function toggleMusica(){
+if(musica.paused){musica.play();}
+else{musica.pause();}
+}
+
+/* corações */
+setInterval(()=>{
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(20+Math.random()*20)+"px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+},400);
+
+/* estrelas */
+for(let i=0;i<80;i++){
+const star=document.createElement("div");
+star.className="star";
+star.style.left=Math.random()*100+"vw";
+star.style.top=Math.random()*100+"vh";
+star.style.animationDuration=(1+Math.random()*2)+"s";
+document.body.appendChild(star);
+}
+
+/* carta digitando */
+const texto=`Desde o dia 20 de outubro de 2025, minha vida mudou completamente.
+
+Você transformou meus dias comuns em dias especiais,
+me ensinou que o amor está nas pequenas coisas,
+nas conversas simples,
+nas risadas inesperadas,
+e até no silêncio que a gente compartilha.
+
+Cada momento ao seu lado virou memória boa.
+Cada mês juntos é mais uma certeza de que é você.
+
+E se eu pudesse escolher mil vezes,
+mil vezes ainda escolheria viver tudo isso com você.
+
+Obrigado por ser minha melhor parte.
+Eu amo viver com você. ❤️`;
+
+let i=0;
+function abrirCarta(){
+document.getElementById("carta").style.display="block";
+digitar();
+}
+
+function digitar(){
+if(i<texto.length){
+document.getElementById("textoCarta").innerHTML+=texto.charAt(i);
+i++;
+setTimeout(digitar,40);
+}
 }
 </script>
 
