@@ -1,119 +1,178 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para o Meu Amor ❤️</title>
+<title>Para o Meu Amor 💖</title>
 
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        background: linear-gradient(135deg, #ff4d6d, #ff8fa3);
-        color: white;
-        text-align: center;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ff4d6d, #ff8fa3);
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow-x: hidden;
+}
 
-    #inicio {
-        display: block;
-    }
+.container {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+    animation: fadeIn 1.5s ease;
+    max-width: 900px;
+}
 
-    .container {
-        display: none;
-        animation: aparecer 1.5s ease;
-    }
+h1 {
+    font-size: 2.5em;
+}
 
-    button {
-        padding: 20px 40px;
-        font-size: 22px;
-        background-color: white;
-        color: #ff4d6d;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
+button {
+    background: white;
+    color: #ff4d6d;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
-    button:hover {
-        transform: scale(1.1);
-        background-color: #ffe5ec;
-    }
+button:hover {
+    transform: scale(1.1);
+    background: #ffe5ec;
+}
 
-    h1 {
-        font-size: 40px;
-        margin-bottom: 10px;
-    }
+#contador {
+    font-size: 2em;
+    margin-top: 20px;
+}
 
-    #contador {
-        font-size: 28px;
-        margin-top: 20px;
-    }
+/* GALERIA */
+.galeria {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
-    @keyframes aparecer {
-        from {opacity: 0; transform: translateY(30px);}
-        to {opacity: 1; transform: translateY(0);}
+.galeria img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    transition: 0.4s;
+}
+
+.galeria img:hover {
+    transform: scale(1.1);
+}
+
+/* CORAÇÕES */
+.heart {
+    position: absolute;
+    color: rgba(255,255,255,0.6);
+    animation: float 6s linear infinite;
+    font-size: 24px;
+}
+
+@keyframes float {
+    from {
+        transform: translateY(100vh);
+        opacity: 1;
     }
+    to {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
 </style>
 </head>
 
 <body>
 
-<div id="inicio">
-    <button onclick="mostrarSite()">Clique aqui amor ❤️</button>
-</div>
-
-<div class="container" id="conteudo">
-    <h1>Estamos juntos há:</h1>
-    <div id="contador"></div>
-</div>
-
-<!-- Música (coloque o arquivo MP3 na mesma pasta do HTML) -->
+<!-- MÚSICA -->
 <audio id="musica" loop>
     <source src="musica.mp3" type="audio/mpeg">
 </audio>
 
+<div class="container" id="inicio">
+    <h1>💘 Tenho algo pra você 💘</h1>
+    <button onclick="iniciar()">Clique aqui amor</button>
+</div>
+
+<div class="container" id="tempo" style="display:none;">
+    <h1>Estamos juntos há...</h1>
+    <div id="contador"></div>
+
+    <p style="margin-top:20px; font-size:18px;">
+        Desde o dia <b>20 de outubro de 2025</b> minha vida ficou muito mais feliz 💖<br>
+        Cada momento ao seu lado é especial.<br>
+        Esse site é só uma pequena forma de mostrar o quanto você é importante pra mim.
+    </p>
+
+    <div class="galeria">
+        <img src="foto1.jpg">
+        <img src="foto2.jpg">
+    </div>
+</div>
+
 <script>
-function mostrarSite() {
+// DATA QUE VOCÊS COMEÇARAM
+const dataInicio = new Date("2025-10-20T00:00:00");
+
+function iniciar() {
     document.getElementById("inicio").style.display = "none";
-    document.getElementById("conteudo").style.display = "block";
+    document.getElementById("tempo").style.display = "block";
 
     document.getElementById("musica").play();
+
     atualizarContador();
     setInterval(atualizarContador, 1000);
-}
 
-// DATA DO INÍCIO DO NAMORO (20 OUTUBRO 2025)
-const dataInicio = new Date(2025, 9, 20); 
-// (mês começa do 0 → outubro = 9)
+    criarCoracoes();
+}
 
 function atualizarContador() {
     const agora = new Date();
+    const diferenca = agora - dataInicio;
 
-    let anos = agora.getFullYear() - dataInicio.getFullYear();
-    let meses = agora.getMonth() - dataInicio.getMonth();
-    let dias = agora.getDate() - dataInicio.getDate();
-
-    if (dias < 0) {
-        meses--;
-        const ultimoMes = new Date(agora.getFullYear(), agora.getMonth(), 0);
-        dias += ultimoMes.getDate();
-    }
-
-    if (meses < 0) {
-        anos--;
-        meses += 12;
-    }
+    const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
+    const minutos = Math.floor((diferenca / (1000 * 60)) % 60);
+    const segundos = Math.floor((diferenca / 1000) % 60);
 
     document.getElementById("contador").innerHTML =
-        anos + " anos, " + meses + " meses e " + dias + " dias ❤️";
+        `${dias} dias ${horas}h ${minutos}m ${segundos}s 💞`;
+}
+
+// CORAÇÕES SUBINDO
+function criarCoracoes() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 6000);
+    }, 300);
 }
 </script>
 
 </body>
 </html>
-
